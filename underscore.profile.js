@@ -11,7 +11,7 @@
  *
  *     _.profileResults();
  *
- * It will give you something like this:
+ * Will give you something like this:
  *
  *     Thread.render: Called 18 times, average of 16 ms. Total: 0.304 s.
  *
@@ -30,15 +30,20 @@ _.profile = function (name, func) {
   _._profile_results = _._profile_results || {};
   _._profile_results[name] = _._profile_results[name] || {
     times_called: 0,
+    ms_max: 0,
     ms_total: 0
   };
 
   return _.wrap(func, function (f, a) {
-    var result, start;
+    var result, start, elapsed;
     start = Date.now();
     result = f.apply(this, arguments);
+    elapsed = Date.now() - start;
     _._profile_results[name].times_called += 1;
-    _._profile_results[name].ms_total += Date.now() - start;
+    _._profile_results[name].ms_total += elapsed;
+    if (elapsed > _._profile_results[name].ms_max) {
+      _._profile_results[name].ms_max += elapsed;
+    }
     return result;
   });
 };
@@ -50,8 +55,9 @@ _.profileResults = function () {
   _(_._profile_results).each(function (results, name) {
     console.log(
       name + ": " +
-      "Called " + results.times_called + " times, " +
-      "average of " + Math.floor(results.ms_total / results.times_called) + " ms. " +
+      "Called " + results.times_called + " times. " +
+      "Avg: " + Math.floor(results.ms_total / results.times_called) + " ms. " +
+      "Max: " + results.ms_max + " ms. " +
       "Total: " + (results.ms_total / 1000).toFixed(3) + " s."
      );
   });

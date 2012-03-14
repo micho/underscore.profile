@@ -16,7 +16,7 @@ Whenever you want to see results, you can call:
 
 It will give you something like this:
 
-    Thread.render: Called 18 times, average of 16 ms. Total: 0.304 s.
+    Thread.render: Called 6 times. Avg: 23 ms. Max: 46 ms. Total: 0.141 s.
 
 Attributions
 ------------
