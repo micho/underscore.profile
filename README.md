@@ -21,4 +21,4 @@ It will give you something like this:
 Attributions
 ------------
 
-Made by Pablo Villalba (@micho) for Teambox
+Made by Pablo Villalba ([@micho](http://twitter.com/micho)) for [Teambox](http://teambox.com)
