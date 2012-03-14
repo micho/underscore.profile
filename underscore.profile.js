@@ -13,7 +13,7 @@
  *
  * Will give you something like this:
  *
- *     Thread.render: Called 18 times, average of 16 ms. Total: 0.304 s.
+ *     Thread.render: Called 6 times. Avg: 26 ms. Max: 78 ms. Total: 0.157 s.
  *
  */
 
@@ -52,13 +52,18 @@ _.profile = function (name, func) {
  * Display results from profiled functions.
  */
 _.profileResults = function () {
-  _(_._profile_results).each(function (results, name) {
-    console.log(
-      name + ": " +
-      "Called " + results.times_called + " times. " +
-      "Avg: " + Math.floor(results.ms_total / results.times_called) + " ms. " +
-      "Max: " + results.ms_max + " ms. " +
-      "Total: " + (results.ms_total / 1000).toFixed(3) + " s."
-     );
-  });
+  _(_._profile_results)
+    .chain()
+    .sortBy(function (results, name) {
+      results.name = name;
+      return -results.ms_total;
+    }).each(function (results) {
+      console.log(
+        results.name + ": " +
+        "Called " + results.times_called + " times. " +
+        "Avg: " + Math.floor(results.ms_total / results.times_called) + " ms. " +
+        "Max: " + results.ms_max + " ms. " +
+        "Total: " + (results.ms_total / 1000).toFixed(3) + " s."
+       );
+    });
 };
