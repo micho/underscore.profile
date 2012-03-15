@@ -42,7 +42,7 @@ _.profile = function (name, func) {
     _._profile_results[name].times_called += 1;
     _._profile_results[name].ms_total += elapsed;
     if (elapsed > _._profile_results[name].ms_max) {
-      _._profile_results[name].ms_max += elapsed;
+      _._profile_results[name].ms_max = elapsed;
     }
     return result;
   });
