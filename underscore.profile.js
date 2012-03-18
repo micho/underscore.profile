@@ -36,9 +36,9 @@ _.profile = function (name, func) {
 
   return _.wrap(func, function (f, a) {
     var result, start, elapsed;
-    start = Date.now();
+    start = new Date().getTime();
     result = f.apply(this, arguments);
-    elapsed = Date.now() - start;
+    elapsed = new Date().getTime() - start;
     _._profile_results[name].times_called += 1;
     _._profile_results[name].ms_total += elapsed;
     if (elapsed > _._profile_results[name].ms_max) {
